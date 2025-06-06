@@ -50,7 +50,7 @@ todos_son_grupo_z = all(año>2000 for año in años_nacimiento)
 if todos_son_grupo_z:
     print("Grupo Z")             
 else:                               # De lo contrario, si alguno/s nacieron antes del año 2000, imprimir "No todos pertenecen al Grupo Z".
-    print("No todos pertenecen a Grupo Z".)    
+    print("No todos pertenecen a Grupo Z.")    
 
 
 """ B.4 - Si alguno nació en año bisiesto, mostrar "Tenemos un año especial". """
@@ -85,6 +85,6 @@ for año in años_nacimiento:
 # Mostrar los resultados en pantalla.
 # Recorrer la lista prod_cartesiano, imprimiendo cada par (tupla)
 for año, edad in prod_cartesiano:
-    print(f"Año: {año} - Edad: {edad}")
+    print(f"{año}:{edad}")
 
           
