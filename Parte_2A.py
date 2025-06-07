@@ -31,6 +31,7 @@ estudiantes = [
     "Lagos Alejandro",
     "Maldonado Ariana",
 ]
+
 # Letras para identificar a cada uno de los conjuntos.
 letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -38,13 +39,17 @@ letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 # ** Definición de funciones necesarias para el análisis de grupos **
 
 
-def analizar_grupo(estudiantes: list = estudiantes, letras: str = letras) -> None:
+def analizar_grupo(estudiantes=estudiantes, letras=letras):
     """
     Función principal que coordina el ingreso de DNIs, generación de conjuntos,
     y operaciones entre conjuntos.
-    :param estudiantes: list - Lista de nombres de los estudiantes.
-    :param letras: str - String de letras que identifican a cada conjunto.
-    :return: None - Muestra los resultados en la consola.
+
+    Args:
+        estudiantes: list - Lista de nombres de los estudiantes que ingresarán sus DNIs.
+        letras: str - String de letras que identifican a cada conjunto.
+
+    Returns:
+        None - Muestra los resultados en la consola.
     """
 
     # Listas vacías para guardar los DNIs y los conjuntos generados
@@ -128,31 +133,43 @@ def analizar_grupo(estudiantes: list = estudiantes, letras: str = letras) -> Non
     determinar_grupo_impar(conjuntos)
 
 
-def ingreso_documento(nombre: str) -> str:
+def ingreso_documento(nombre):
     """
     Función que solicita el ingreso del documento de un estudiante.
-    :param nombre: str - Nombre del estudiante.
-    :return: str - Documento ingresado sin puntos ni separadores.
+
+    Args:
+        nombre: str - Nombre del estudiante para mostrar en la solicitud de ingreso.
+
+    Returns:
+        str - Documento ingresado sin puntos ni separadores.
     """
 
     return input(f"{nombre:<20} -> ")
 
 
-def generar_conjunto(dni: str) -> set:
+def generar_conjunto(dni):
     """
     Función que genera un conjunto de dígitos únicos a partir del DNI ingresado.
-    :param dni: str - Documento ingresado sin puntos ni separadores.
-    :return: set - Conjunto de dígitos únicos del DNI.
+
+    Args:
+        dni: str - Documento ingresado sin puntos ni separadores.
+
+    Returns:
+        set - Conjunto de dígitos únicos del DNI.
     """
 
     return set(dni)
 
 
-def formatear_conjunto(conjunto: set) -> str:
+def formatear_conjunto(conjunto):
     """
     Función que formatea un conjunto para su visualización.
-    :param conjunto: set - Conjunto de dígitos únicos a formatear.
-    :return: str - Conjunto formateado como cadena de texto.
+
+    Args:
+        conjunto: set - Conjunto de dígitos únicos a formatear.
+
+    Returns:
+        str - Conjunto formateado como cadena de texto.
     """
 
     # "sorted" se utiliza para ordenar los elementos del conjunto antes de retornarlo.
@@ -160,13 +177,17 @@ def formatear_conjunto(conjunto: set) -> str:
     return str(sorted(conjunto)).replace("[", "{").replace("]", "}").replace("'", "")
 
 
-def representar_operacion(cantidad_conjuntos: list, letras: str, operador: str) -> str:
+def representar_operacion(cantidad_conjuntos, letras, operador):
     """
     Genera una representación en string de una operación entre múltiples conjuntos
-    :param conjuntos: list - Lista de conjuntos a operar
-    :param letras: str - String con las letras identificadoras de cada conjunto
-    :param operador: str - Operador a representar ('U', '∩', o 'Δ')
-    :return: str - String con la representación de la operación (ej: "A U B U C")
+
+    Args:
+        contidad_conjuntos: int - Cantidad de conjuntos a operar
+        letras: str - String con las letras identificadoras de cada conjunto
+        operador: str - Operador a representar ('U', '∩', o 'Δ')
+
+    Returns:
+        str - Representación de la operación (ej: "A U B U C")
     """
 
     # Lista para almacenar las partes de la representación
@@ -176,6 +197,7 @@ def representar_operacion(cantidad_conjuntos: list, letras: str, operador: str) 
     for i in range(cantidad_conjuntos):
         # Agregamos la letra correspondiente al conjunto actual
         partes.append(letras[i])
+
         # Comprobamos si no es el último conjunto
         if i < cantidad_conjuntos - 1:
             # Agregamos el operador
@@ -184,11 +206,15 @@ def representar_operacion(cantidad_conjuntos: list, letras: str, operador: str) 
     return " ".join(partes)
 
 
-def union_todos(conjuntos: list) -> set:
+def union_todos(conjuntos):
     """
     Función que realiza la unión de todos los conjuntos.
-    :param conjuntos: list - Lista de conjuntos a unir.
-    :return: set - Conjunto ordenado con la unión de todos los conjuntos.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a unir.
+
+    Returns:
+        set - Conjunto ordenado con la unión de todos los conjuntos.
     """
 
     # Inicializamos el resultado con una COPIA del primer conjunto de la lista.
@@ -205,11 +231,15 @@ def union_todos(conjuntos: list) -> set:
     return resultado
 
 
-def interseccion_todos(conjuntos: list) -> set:
+def interseccion_todos(conjuntos):
     """
     Función que realiza la intersección de todos los conjuntos.
-    :param conjuntos: list - Lista de conjuntos a intersectar.
-    :return: set - Conjunto ordenado con la intersección de todos los conjuntos.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a intersectar.
+
+    Returns:
+        set - Conjunto ordenado con la intersección de todos los conjuntos.
     """
 
     # Inicializamos el resultado con una COPIA del primer conjunto de la lista.
@@ -226,11 +256,15 @@ def interseccion_todos(conjuntos: list) -> set:
     return resultado
 
 
-def diferencia_S_todos(conjuntos: list) -> set:
+def diferencia_S_todos(conjuntos):
     """
     Función que calcula la diferencia simétrica de todos los conjuntos.
-    :param conjuntos: list - Lista de conjuntos a calcular la diferencia simétrica.
-    :return: set - Conjunto ordenado con la diferencia simétrica de todos los conjuntos.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a calcular la diferencia simétrica.
+
+    Returns:
+        set - Conjunto ordenado con la diferencia simétrica de todos los conjuntos.
     """
 
     # Realizamos la unión de todos los conjuntos.
@@ -242,12 +276,16 @@ def diferencia_S_todos(conjuntos: list) -> set:
     return union_total - interseccion_total
 
 
-def diferencias_por_pares(conjuntos: list, letras: str) -> None:
+def diferencias_por_pares(conjuntos, letras):
     """
     Función que calcula y muestra la diferencia entre cada par de conjuntos.
-    :param conjuntos: list - Lista de conjuntos a comparar.
-    :param letras: str - String de letras que identifican a cada conjunto.
-    :return: None - Muestra las diferencias en la consola.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a comparar.
+        letras: str - String de letras que identifican a cada conjunto.
+
+    Returns:
+        None - Muestra las diferencias en la consola.
     """
 
     # Bucle anidado para calcular la diferencia entre cada par de conjuntos
@@ -271,16 +309,18 @@ def diferencias_por_pares(conjuntos: list, letras: str) -> None:
                     print(f"{letras[i]} - {letras[j]} = ∅ (conjunto vacío)")
 
 
-def mostrar_operacion(
-    conjuntos: list, letras: str, operador: str, funcion_operacion: callable
-) -> None:
+def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
     """
     Función que muestra el resultado de una operación entre conjuntos.
-    :param conjuntos: list - Lista de conjuntos a operar.
-    :param letras: str - String de letras que identifican a cada conjunto.
-    :param operador: str - Operador a utilizar ('U', '∩', 'Δ').
-    :param funcion_operacion: callable - Función que realiza la operación entre conjuntos.
-    :return: None - Muestra el resultado de la operación en la consola.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a operar.
+        letras: str - String de letras que identifican a cada conjunto.
+        operador: str - Operador a utilizar ('U', '∩', 'Δ').
+        funcion_operacion: callable - Función que realiza la operación entre conjuntos.
+
+    Returns:
+        None - Muestra el resultado de la operación en la consola.
     """
 
     # Asiganción de la cantidad de conjuntos que se van a operar.
@@ -300,12 +340,16 @@ def mostrar_operacion(
     print(f"{operacion_str} = {resultado_str}")
 
 
-def analizar_frecuencia_dnis(documentos: list, letras: str) -> None:
+def analizar_frecuencia_dnis(documentos, letras):
     """
     Función que analiza la frecuencia de los dígitos en los DNIs ingresados.
-    :param documentos: list - Lista de DNIs ingresados.
-    :param letras: str - String de letras que identifican a cada DNI.
-    :return: None - Muestra la frecuencia de los dígitos en la consola.
+
+    Args:
+        documentos: list - Lista de DNIs ingresados.
+        letras: str - String de letras que identifican a cada DNI.
+
+    Returns:
+        None - Muestra la frecuencia de los dígitos en la consola.
     """
 
     # Lista para almacenar las frecuencias individuales de cada DNI
@@ -336,11 +380,15 @@ def analizar_frecuencia_dnis(documentos: list, letras: str) -> None:
         print(f"{letras[i]}: [{dni}] -> {detalle}")
 
 
-def analizar_frecuencia_conjuntos(conjuntos: list) -> None:
+def analizar_frecuencia_conjuntos(conjuntos):
     """
     Función que analiza la frecuencia de los dígitos en los conjuntos.
-    :param conjuntos: list - Lista de conjuntos a analizar.
-    :return: None - Muestra la frecuencia de cada dígito en la consola.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a analizar.
+
+    Returns:
+        None - Muestra la frecuencia de cada dígito en la consola.
     """
 
     # Diccionario para almacenar la frecuencia de cada dígito
@@ -375,12 +423,16 @@ def analizar_frecuencia_conjuntos(conjuntos: list) -> None:
         print(f"{digito}: {barra} {freq} conjuntos")
 
 
-def suma_total_digitos(documentos: list, letras: str) -> None:
+def suma_total_digitos(documentos, letras):
     """
     Función que calcula la suma total de los dígitos de todos los DNIs.
-    :param documentos: list - Lista de documentos a sumar.
-    :param letras: str - String de letras que identifican a cada conjunto.
-    :return: None - Muestra la suma total de los dígitos de cada DNI en la consola.
+
+    Args:
+        documentos: list - Lista de DNIs ingresados.
+        letras: str - String de letras que identifican a cada DNI.
+
+    Returns:
+        None - Muestra la suma total de los dígitos de cada DNI en la consola.
     """
 
     # Recorremos cada conjunto en la lista de documentos
@@ -396,11 +448,15 @@ def suma_total_digitos(documentos: list, letras: str) -> None:
 
 
 # 1) Si todos los conjuntos contienen al menos n dígitos en común, entonces el grupo tiene n dígitos comunes.
-def verificar_digitos_comunes(interseccion_resultado: list) -> None:
+def verificar_digitos_comunes(interseccion_resultado):
     """
     Verifica el resultado de la intersección de conjuntos y muestra los dígitos comunes.
-    :param interseccion_resultado: list - Lista de dígitos comunes resultantes de la intersección.
-    :return: None - Se imprime el resultado directamente.
+
+    Args:
+        interseccion_resultado: set - Conjunto de dígitos comunes resultantes de la intersección.
+
+    Returns:
+        None - Imprime los dígitos comunes o un mensaje si no hay dígitos comunes.
     """
 
     # Usamos "set" para crear una copia del conjunto de dígitos comunes resultante de la intersección.
@@ -418,12 +474,16 @@ def verificar_digitos_comunes(interseccion_resultado: list) -> None:
 
 # 2) Si hay más conjuntos con cantidad impar de elementos que conjuntos con cantidad par, entonces el grupo se
 # etiqueta como “grupo impar”.
-def determinar_grupo_impar(conjuntos: list) -> None:
+def determinar_grupo_impar(conjuntos):
     """
     Determina si el grupo se etiqueta como 'grupo impar' o no,
     según la cantidad de conjuntos con número par e impar de elementos.
-    :param conjuntos: list - Lista de conjuntos a evaluar.
-    :return: None - Se imprime el resultado directamente.
+
+    Args:
+        conjuntos: list - Lista de conjuntos a evaluar.
+
+    Returns:
+        None - Se imprime el resultado directamente.
     """
 
     # Inicialización de contadores para la cantidad de conjuntos con número par e impar de elementos.
