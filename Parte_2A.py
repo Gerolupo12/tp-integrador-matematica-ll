@@ -39,55 +39,82 @@ letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 # ** Definición de funciones necesarias para el análisis de grupos **
 
 
-def analizar_grupo(estudiantes=estudiantes, letras=letras):
+def analizar_grupo(
+    estudiantes=estudiantes, letras=letras, documentos_predefinidos=None
+):
     """
-    Función principal que coordina el ingreso de DNIs, generación de conjuntos,
-    y operaciones entre conjuntos.
+    Función principal que coordina el ingreso o uso de DNIs, la generación de conjuntos,
+    y la realización de operaciones y análisis entre ellos.
+
+    Permite al usuario ingresar manualmente los DNIs o utilizar una lista predefinida,
+    lo cual es útil para automatizar pruebas o presentaciones
 
     Args:
-        estudiantes: list - Lista de nombres de los estudiantes que ingresarán sus DNIs.
-        letras: str - String de letras que identifican a cada conjunto.
+        estudiantes (list): Lista de nombres de los estudiantes.
+        letras (str): String de letras que identifican a cada conjunto.
+        documentos_predefinidos (list or None): Lista opcional de DNIs (como strings).
+            Si se proporciona, se omite el ingreso manual y se usan estos valores directamente.
 
     Returns:
-        None - Muestra los resultados en la consola.
+        out (None): Muestra los resultados en la consola.
     """
 
-    # Listas vacías para guardar los DNIs y los conjuntos generados
-    documentos = []
-    conjuntos = []
+    # Si hay documentos predefinidos, los usamos directamente
+    if documentos_predefinidos:
+        # Asignamos la lista de DNIs a una nueva lista
+        documentos = documentos_predefinidos
 
-    # Ingreso y validación de datos
-    print("\n=== INGRESE LOS DNIs (sin puntos ni separadores) ===\n")
+        # Transformamos los documentos en conjuntos y los asignamos a una lista
+        conjuntos = [generar_conjunto(dni) for dni in documentos]
 
-    # Bucle para ingresar los documentos y generar los conjuntos correspondientes.
-    for nombre in estudiantes:
-        # Se llama a la función con el nombre del estudiante
-        dni = ingreso_documento(nombre)
+        # Mostrar conjuntos generados
+        print("\n=== USANDO DNIs PREDEFINIDOS ===\n")
 
-        # Validación del DNI ingresado: debe contener solo dígitos y tener una longitud de 8 caracteres.
-        while not (dni.isdigit() and len(dni) == 8):
-            # Si no cumple con las condiciones, se solicita nuevamente el ingreso del DNI.
-            print(
-                "El DNI ingresado no es válido. Debe contener solo dígitos y tener una longitud de 8 caracteres.\n"
-            )
+        # Se crea el bucle for para recorrer los conjuntos y sus respectivos nombres.
+        for i, dni in enumerate(documentos):
+            # Se formatea el conjunto utilizando la función "formatear_conjunto".
+            conjunto_formateado = formatear_conjunto(conjuntos[i])
+
+            # Se imprime el conjunto formateado junto con la letra y el nombre del estudiante.
+            print(f"{letras[i]} = {conjunto_formateado:<25}({estudiantes[i]})")
+    else:
+        # Modo manual: se ingresan los DNIs uno por uno
+        # Listas vacías para guardar los DNIs y los conjuntos generados
+        documentos = []
+        conjuntos = []
+
+        # Ingreso y validación de datos
+        print("\n=== INGRESE LOS DNIs (sin puntos ni separadores) ===\n")
+
+        # Recorremos cada estudiante del grupo
+        for nombre in estudiantes:
+            # Se llama a la función con el nombre del estudiante
             dni = ingreso_documento(nombre)
 
-        # Agregamos el DNI a la lista de documentos.
-        documentos.append(dni)
+            # Validación del DNI ingresado: debe contener solo dígitos y tener una longitud de 8 caracteres.
+            while not (dni.isdigit() and len(dni) == 8):
+                # Si no cumple con las condiciones, se solicita nuevamente el ingreso del DNI.
+                print(
+                    "El DNI ingresado no es válido. Debe contener solo dígitos y tener una longitud de 8 caracteres.\n"
+                )
+                dni = ingreso_documento(nombre)
 
-        # Generamos el conjunto de dígitos únicos a partir del DNI ingresado.
-        conjuntos.append(generar_conjunto(dni))
+            # Agregamos el DNI a la lista de documentos.
+            documentos.append(dni)
 
-    # Mostrar conjuntos
-    print("\n=== CONJUNTOS GENERADOS ===\n")
+            # Generamos el conjunto de dígitos únicos a partir del DNI ingresado.
+            conjuntos.append(generar_conjunto(dni))
 
-    # Se crea el bucle for para recorrer los conjuntos y sus respectivos nombres.
-    for i in range(len(conjuntos)):
-        # Se formatea el conjunto utilizando la función "formatear_conjunto".
-        conjunto_formateado = formatear_conjunto(conjuntos[i])
+        # Mostrar conjuntos
+        print("\n=== CONJUNTOS GENERADOS ===\n")
 
-        # Se imprime el conjunto formateado junto con la letra y el nombre del estudiante.
-        print(f"{letras[i]} = {conjunto_formateado:<25}({estudiantes[i]})")
+        # Se crea el bucle for para recorrer los conjuntos y sus respectivos nombres.
+        for i in range(len(conjuntos)):
+            # Se formatea el conjunto utilizando la función "formatear_conjunto".
+            conjunto_formateado = formatear_conjunto(conjuntos[i])
+
+            # Se imprime el conjunto formateado junto con la letra y el nombre del estudiante.
+            print(f"{letras[i]} = {conjunto_formateado:<25}({estudiantes[i]})")
 
     # Se llama a las funciones y se muestra su resultado. Se utiliza "sorted" para ordenar los
     # elementos del conjunto antes de mostrarlos. Se reemplazan los corchetes por llaves para una
@@ -138,10 +165,10 @@ def ingreso_documento(nombre):
     Función que solicita el ingreso del documento de un estudiante.
 
     Args:
-        nombre: str - Nombre del estudiante para mostrar en la solicitud de ingreso.
+        nombre (str): Nombre del estudiante para mostrar en la solicitud de ingreso.
 
     Returns:
-        str - Documento ingresado sin puntos ni separadores.
+        out (str): Documento ingresado sin puntos ni separadores.
     """
 
     return input(f"{nombre:<20} -> ")
@@ -152,10 +179,10 @@ def generar_conjunto(dni):
     Función que genera un conjunto de dígitos únicos a partir del DNI ingresado.
 
     Args:
-        dni: str - Documento ingresado sin puntos ni separadores.
+        dni (str): Documento ingresado sin puntos ni separadores.
 
     Returns:
-        set - Conjunto de dígitos únicos del DNI.
+        out (set): Conjunto de dígitos únicos del DNI.
     """
 
     return set(dni)
@@ -166,10 +193,10 @@ def formatear_conjunto(conjunto):
     Función que formatea un conjunto para su visualización.
 
     Args:
-        conjunto: set - Conjunto de dígitos únicos a formatear.
+        conjunto (set): Conjunto de dígitos únicos a formatear.
 
     Returns:
-        str - Conjunto formateado como cadena de texto.
+        out (str): Conjunto formateado como cadena de texto.
     """
 
     # "sorted" se utiliza para ordenar los elementos del conjunto antes de retornarlo.
@@ -182,12 +209,12 @@ def representar_operacion(cantidad_conjuntos, letras, operador):
     Genera una representación en string de una operación entre múltiples conjuntos
 
     Args:
-        contidad_conjuntos: int - Cantidad de conjuntos a operar
-        letras: str - String con las letras identificadoras de cada conjunto
-        operador: str - Operador a representar ('U', '∩', o 'Δ')
+        contidad_conjuntos (int): Cantidad de conjuntos a operar
+        letras (str): String con las letras identificadoras de cada conjunto
+        operador (str): Operador a representar ('U', '∩', o 'Δ')
 
     Returns:
-        str - Representación de la operación (ej: "A U B U C")
+        out (str): Representación de la operación (ej: "A U B U C")
     """
 
     # Lista para almacenar las partes de la representación
@@ -211,10 +238,10 @@ def union_todos(conjuntos):
     Función que realiza la unión de todos los conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a unir.
+        conjuntos (list): Lista de conjuntos a unir.
 
     Returns:
-        set - Conjunto ordenado con la unión de todos los conjuntos.
+        out (set): Conjunto ordenado con la unión de todos los conjuntos.
     """
 
     # Inicializamos el resultado con una COPIA del primer conjunto de la lista.
@@ -236,10 +263,10 @@ def interseccion_todos(conjuntos):
     Función que realiza la intersección de todos los conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a intersectar.
+        conjuntos (list): Lista de conjuntos a intersectar.
 
     Returns:
-        set - Conjunto ordenado con la intersección de todos los conjuntos.
+        out (set): Conjunto ordenado con la intersección de todos los conjuntos.
     """
 
     # Inicializamos el resultado con una COPIA del primer conjunto de la lista.
@@ -261,10 +288,10 @@ def diferencia_S_todos(conjuntos):
     Función que calcula la diferencia simétrica de todos los conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a calcular la diferencia simétrica.
+        conjuntos (list): Lista de conjuntos a calcular la diferencia simétrica.
 
     Returns:
-        set - Conjunto ordenado con la diferencia simétrica de todos los conjuntos.
+        out (set): Conjunto ordenado con la diferencia simétrica de todos los conjuntos.
     """
 
     # Realizamos la unión de todos los conjuntos.
@@ -281,11 +308,11 @@ def diferencias_por_pares(conjuntos, letras):
     Función que calcula y muestra la diferencia entre cada par de conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a comparar.
-        letras: str - String de letras que identifican a cada conjunto.
+        conjuntos (list): Lista de conjuntos a comparar.
+        letras (str): String de letras que identifican a cada conjunto.
 
     Returns:
-        None - Muestra las diferencias en la consola.
+        out (None): Muestra las diferencias en la consola.
     """
 
     # Bucle anidado para calcular la diferencia entre cada par de conjuntos
@@ -314,13 +341,13 @@ def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
     Función que muestra el resultado de una operación entre conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a operar.
-        letras: str - String de letras que identifican a cada conjunto.
-        operador: str - Operador a utilizar ('U', '∩', 'Δ').
+        conjuntos (list): Lista de conjuntos a operar.
+        letras (str): String de letras que identifican a cada conjunto.
+        operador (str): Operador a utilizar ('U', '∩', 'Δ').
         funcion_operacion: callable - Función que realiza la operación entre conjuntos.
 
     Returns:
-        None - Muestra el resultado de la operación en la consola.
+        out (None): Muestra el resultado de la operación en la consola.
     """
 
     # Asiganción de la cantidad de conjuntos que se van a operar.
@@ -345,11 +372,11 @@ def analizar_frecuencia_dnis(documentos, letras):
     Función que analiza la frecuencia de los dígitos en los DNIs ingresados.
 
     Args:
-        documentos: list - Lista de DNIs ingresados.
-        letras: str - String de letras que identifican a cada DNI.
+        documentos (list): Lista de DNIs ingresados.
+        letras (str): String de letras que identifican a cada DNI.
 
     Returns:
-        None - Muestra la frecuencia de los dígitos en la consola.
+        out (None): Muestra la frecuencia de los dígitos en la consola.
     """
 
     # Lista para almacenar las frecuencias individuales de cada DNI
@@ -385,10 +412,10 @@ def analizar_frecuencia_conjuntos(conjuntos):
     Función que analiza la frecuencia de los dígitos en los conjuntos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a analizar.
+        conjuntos (list): Lista de conjuntos a analizar.
 
     Returns:
-        None - Muestra la frecuencia de cada dígito en la consola.
+        out (None): Muestra la frecuencia de cada dígito en la consola.
     """
 
     # Diccionario para almacenar la frecuencia de cada dígito
@@ -428,11 +455,11 @@ def suma_total_digitos(documentos, letras):
     Función que calcula la suma total de los dígitos de todos los DNIs.
 
     Args:
-        documentos: list - Lista de DNIs ingresados.
-        letras: str - String de letras que identifican a cada DNI.
+        documentos (list): Lista de DNIs ingresados.
+        letras (str): String de letras que identifican a cada DNI.
 
     Returns:
-        None - Muestra la suma total de los dígitos de cada DNI en la consola.
+        out (None): Muestra la suma total de los dígitos de cada DNI en la consola.
     """
 
     # Recorremos cada conjunto en la lista de documentos
@@ -453,10 +480,10 @@ def verificar_digitos_comunes(interseccion_resultado):
     Verifica el resultado de la intersección de conjuntos y muestra los dígitos comunes.
 
     Args:
-        interseccion_resultado: set - Conjunto de dígitos comunes resultantes de la intersección.
+        interseccion_resultado (set): Conjunto de dígitos comunes resultantes de la intersección.
 
     Returns:
-        None - Imprime los dígitos comunes o un mensaje si no hay dígitos comunes.
+        out (None): Imprime los dígitos comunes o un mensaje si no hay dígitos comunes.
     """
 
     # Usamos "set" para crear una copia del conjunto de dígitos comunes resultante de la intersección.
@@ -480,10 +507,10 @@ def determinar_grupo_impar(conjuntos):
     según la cantidad de conjuntos con número par e impar de elementos.
 
     Args:
-        conjuntos: list - Lista de conjuntos a evaluar.
+        conjuntos (list): Lista de conjuntos a evaluar.
 
     Returns:
-        None - Se imprime el resultado directamente.
+        out (None): Se imprime el resultado directamente.
     """
 
     # Inicialización de contadores para la cantidad de conjuntos con número par e impar de elementos.
@@ -512,5 +539,27 @@ def determinar_grupo_impar(conjuntos):
 
 # Esta sección se ejecuta al iniciar el script.
 if __name__ == "__main__":
-    # Llamamos a la función principal para iniciar el análisis de grupos
-    analizar_grupo()
+    print(
+        "=== BIENVENIDA/O AL PROGRAMA DE INTEGRACIÓN DE MATEMÁTICA CON PROGRAMACION 1 ===\n"
+    )
+    print(
+        "Vamos a realizar operaciones de conjuntos y lógicas entre los dígitos de los DNIs de 5 estudiantes\n"
+    )
+    print("¿Desea ingresar los DNIs manualmente o utilizar los valores predefinidos?")
+    print("1 - Ingresar manualmente")
+    print("2 - Usar DNIs predefinidos del equipo")
+
+    opcion = input("\nSeleccione una opción (1 o 2) -> ")
+
+    if opcion == "2":
+        dnis_predefinidos = [
+            "45413855",  # Ramallo Gerónimo
+            "44011335",  # Mubilla Yanela
+            "32084674",  # Lahoz Cristian
+            "35569473",  # Lagos Alejandro
+            "36184823",  # Maldonado Ariana
+        ]
+
+        analizar_grupo(documentos_predefinidos=dnis_predefinidos)
+    else:
+        analizar_grupo()
