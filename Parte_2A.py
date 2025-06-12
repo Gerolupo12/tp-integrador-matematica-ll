@@ -13,34 +13,16 @@
 # A.6 - Evaluación de condiciones lógicas (condicionales), vinculadas con las expresiones escritas.
 
 
-## Documentos de los integrantes del equipo:
-# A) Ramallo Geronimo: 45413855
-# B) Mubilla Yanella: 44011335
-# C) Lahoz Cristian: 32084674
-# D) Lagos Alejandro: 35569473
-# E) Maldonado Ariana: 36184823
+# ** Importaciones de constantes **
 
-
-# ** Definición de variables y listas necesarias **
-
-# Lista con los nombres de cada uno de los estudiantes.
-estudiantes = [
-    "Ramallo Gerónimo",
-    "Mubilla Yanela",
-    "Lahoz Cristian",
-    "Lagos Alejandro",
-    "Maldonado Ariana",
-]
-
-# Letras para identificar a cada uno de los conjuntos.
-letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+from constantes import ESTUDIANTES, DNIS_PREDEFINIDOS, LETRAS
 
 
 # ** Definición de funciones necesarias para el análisis de grupos **
 
 
 def analizar_grupo(
-    estudiantes=estudiantes, letras=letras, documentos_predefinidos=None
+    estudiantes=ESTUDIANTES, letras=LETRAS, documentos_predefinidos=None
 ):
     """
     Función principal que coordina el ingreso o uso de DNIs, la generación de conjuntos,
@@ -116,9 +98,6 @@ def analizar_grupo(
             # Se imprime el conjunto formateado junto con la letra y el nombre del estudiante.
             print(f"{letras[i]} = {conjunto_formateado:<25}({estudiantes[i]})")
 
-    # Se llama a las funciones y se muestra su resultado. Se utiliza "sorted" para ordenar los
-    # elementos del conjunto antes de mostrarlos. Se reemplazan los corchetes por llaves para una
-    # mejor presentación.
     print("\n* OPERACIONES BÁSICAS ENTRE CONJUNTOS *")
 
     print("\n=== UNIÓN ===\n")
@@ -141,7 +120,7 @@ def analizar_grupo(
 
     print("\n=== FRECUENCIA DE DÍGITOS POR DNI ===\n")
     # Se llama a la función para analizar la frecuencia de los dígitos en los DNIs ingresados.
-    analizar_frecuencia_dnis(documentos, letras)
+    analizar_frecuencia_dnis(documentos, letras, estudiantes)
 
     print("\n=== FRECUENCIA DE LOS DÍGITOS EN LOS CONJUNTOS ===\n")
     # Se llama a la función para analizar la frecuencia de los dígitos en los conjuntos.
@@ -150,14 +129,6 @@ def analizar_grupo(
     print("\n=== SUMA TOTAL DE LOS DÍGITOS DE CADA DNI ===\n")
     # Se llama a la función para calcular la suma total de los dígitos de cada DNI.
     suma_total_digitos(documentos, letras)
-
-    print("\n=== VERIFICACIÓN DE DÍGITOS COMUNES ===\n")
-    # Verificamos los dígitos comunes en todos los conjuntos.
-    verificar_digitos_comunes(interseccion_todos(conjuntos))
-
-    print("\n=== DETERMINACIÓN DEL GRUPO IMPAR ===\n")
-    # Determinamos si el grupo es impar o no.
-    determinar_grupo_impar(conjuntos)
 
 
 def ingreso_documento(nombre):
@@ -344,7 +315,7 @@ def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
         conjuntos (list): Lista de conjuntos a operar.
         letras (str): String de letras que identifican a cada conjunto.
         operador (str): Operador a utilizar ('U', '∩', 'Δ').
-        funcion_operacion: callable - Función que realiza la operación entre conjuntos.
+        funcion_operacion (callable): Función que realiza la operación entre conjuntos.
 
     Returns:
         out (None): Muestra el resultado de la operación en la consola.
@@ -367,7 +338,7 @@ def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
     print(f"{operacion_str} = {resultado_str}")
 
 
-def analizar_frecuencia_dnis(documentos, letras):
+def analizar_frecuencia_dnis(documentos, letras, estudiantes):
     """
     Función que analiza la frecuencia de los dígitos en los DNIs ingresados.
 
@@ -404,7 +375,7 @@ def analizar_frecuencia_dnis(documentos, letras):
         detalle = ", ".join([f"f({d})={c}" for d, c in digitos_ordenados])
 
         # Mostramos el resultado en la consola, incluyendo la letra del conjunto y el DNI.
-        print(f"{letras[i]}: [{dni}] -> {detalle}")
+        print(f"{letras[i]}: [{estudiantes[i]}] -> {detalle}")
 
 
 def analizar_frecuencia_conjuntos(conjuntos):
@@ -471,69 +442,6 @@ def suma_total_digitos(documentos, letras):
         print(f"Σ dig({letras[i]}) = {suma}")
 
 
-# ** Implementación en código de expresiones lógicas en lenguaje natural **
-
-
-# 1) Si todos los conjuntos contienen al menos n dígitos en común, entonces el grupo tiene n dígitos comunes.
-def verificar_digitos_comunes(interseccion_resultado):
-    """
-    Verifica el resultado de la intersección de conjuntos y muestra los dígitos comunes.
-
-    Args:
-        interseccion_resultado (set): Conjunto de dígitos comunes resultantes de la intersección.
-
-    Returns:
-        out (None): Imprime los dígitos comunes o un mensaje si no hay dígitos comunes.
-    """
-
-    # Usamos "set" para crear una copia del conjunto de dígitos comunes resultante de la intersección.
-    # Esto nos permite trabajar con los dígitos comunes sin modificar el conjunto original. Similar a "copy()"
-    digitos_comunes = set(interseccion_resultado)
-
-    # Verificamos si hay dígitos comunes y los mostramos ordenados.
-    if digitos_comunes:
-        print(
-            f"Los dígitos comunes en todos los conjuntos son: {sorted(digitos_comunes)}"
-        )
-    else:
-        print("No hay dígitos comunes en todos los conjuntos.")
-
-
-# 2) Si hay más conjuntos con cantidad impar de elementos que conjuntos con cantidad par, entonces el grupo se
-# etiqueta como “grupo impar”.
-def determinar_grupo_impar(conjuntos):
-    """
-    Determina si el grupo se etiqueta como 'grupo impar' o no,
-    según la cantidad de conjuntos con número par e impar de elementos.
-
-    Args:
-        conjuntos (list): Lista de conjuntos a evaluar.
-
-    Returns:
-        out (None): Se imprime el resultado directamente.
-    """
-
-    # Inicialización de contadores para la cantidad de conjuntos con número par e impar de elementos.
-    impares = 0
-    pares = 0
-
-    # Uso de bucle for para recorrer cada conjunto de la lista "conjuntos".
-    for conjunto in conjuntos:
-        # Se verifica si la cantidad de elementos de cada conjunto es par.
-        if len(conjunto) % 2 == 0:
-            # Si es par, incrementamos el contador de conjuntos pares.
-            pares += 1
-        else:
-            # Si es impar, incrementamos el contador de conjuntos impares.
-            impares += 1
-
-    # Condicional para comparar que tipo de conjuntos es mayor en cantidad.
-    if impares > pares:
-        print("El grupo se etiqueta como 'grupo impar'.")
-    else:
-        print("No se cumple con la condición para ser 'grupo impar'.")
-
-
 # ** Programa Principal **
 
 
@@ -552,14 +460,6 @@ if __name__ == "__main__":
     opcion = input("\nSeleccione una opción (1 o 2) -> ")
 
     if opcion == "2":
-        dnis_predefinidos = [
-            "45413855",  # Ramallo Gerónimo
-            "44011335",  # Mubilla Yanela
-            "32084674",  # Lahoz Cristian
-            "35569473",  # Lagos Alejandro
-            "36184823",  # Maldonado Ariana
-        ]
-
-        analizar_grupo(documentos_predefinidos=dnis_predefinidos)
+        analizar_grupo(documentos_predefinidos=DNIS_PREDEFINIDOS)
     else:
         analizar_grupo()

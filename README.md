@@ -36,7 +36,9 @@ El objetivo de este trabajo práctico integrador fue **profundizar la relación 
 ```plaintext
   tp-integrador-matematica-ll/
     ├── Parte_2A.py                           # Operaciones con DNIs
+    ├── Parte_2A-4.py                         # Módulo de expresiones lógicas en lenguaje natural
     ├── Parte_2B_operaciones.py               # Operaciones con años de nacimiento
+    ├── constantes.py                         # Módulo con constantes utilizadas
     ├── TP integrador II - Matemática.pdf     # Informe principal con desarrollo matemático
     ├── Documento Adicional.pdf               # Detalle de roles y vinculación con la implementación
     └── README.md                             # Este archivo
