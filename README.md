@@ -36,7 +36,8 @@ El objetivo de este trabajo práctico integrador fue **profundizar la relación 
 ```plaintext
   tp-integrador-matematica-ll/
     ├── Parte_2A.py                           # Operaciones con DNIs
-    ├── Parte_2B_operaciones.py               # Operaciones con años de nacimiento
+    ├── Parte_2B.py                           # Operaciones con años de nacimiento
+    ├── constantes.py                         # Módulo con constantes utilizadas
     ├── TP integrador II - Matemática.pdf     # Informe principal con desarrollo matemático
     ├── Documento Adicional.pdf               # Detalle de roles y vinculación con la implementación
     └── README.md                             # Este archivo
@@ -85,7 +86,7 @@ Este script trabaja sobre la lista de años de nacimiento de los integrantes del
 
 Duración estimada: entre 5 y 10 minutos.  
 Cada integrante explica en cámara la parte que realizó, el funcionamiento del programa y la integración entre matemática y programación.  
-📌 [Link al video (YouTube)](https://...)
+📌 [Link al video explicativo](https://...)
 
 ---
 

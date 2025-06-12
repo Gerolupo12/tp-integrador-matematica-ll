@@ -13,34 +13,16 @@
 # A.6 - Evaluación de condiciones lógicas (condicionales), vinculadas con las expresiones escritas.
 
 
-## Documentos de los integrantes del equipo:
-# A) Ramallo Geronimo: 45413855
-# B) Mubilla Yanella: 44011335
-# C) Lahoz Cristian: 32084674
-# D) Lagos Alejandro: 35569473
-# E) Maldonado Ariana: 36184823
+# ** Importaciones de constantes **
 
-
-# ** Definición de variables y listas necesarias **
-
-# Lista con los nombres de cada uno de los estudiantes.
-estudiantes = [
-    "Ramallo Gerónimo",
-    "Mubilla Yanela",
-    "Lahoz Cristian",
-    "Lagos Alejandro",
-    "Maldonado Ariana",
-]
-
-# Letras para identificar a cada uno de los conjuntos.
-letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+from constantes import ESTUDIANTES, DNIS_PREDEFINIDOS, LETRAS
 
 
 # ** Definición de funciones necesarias para el análisis de grupos **
 
 
 def analizar_grupo(
-    estudiantes=estudiantes, letras=letras, documentos_predefinidos=None
+    estudiantes=ESTUDIANTES, letras=LETRAS, documentos_predefinidos=None
 ):
     """
     Función principal que coordina el ingreso o uso de DNIs, la generación de conjuntos,
@@ -116,9 +98,6 @@ def analizar_grupo(
             # Se imprime el conjunto formateado junto con la letra y el nombre del estudiante.
             print(f"{letras[i]} = {conjunto_formateado:<25}({estudiantes[i]})")
 
-    # Se llama a las funciones y se muestra su resultado. Se utiliza "sorted" para ordenar los
-    # elementos del conjunto antes de mostrarlos. Se reemplazan los corchetes por llaves para una
-    # mejor presentación.
     print("\n* OPERACIONES BÁSICAS ENTRE CONJUNTOS *")
 
     print("\n=== UNIÓN ===\n")
@@ -141,7 +120,7 @@ def analizar_grupo(
 
     print("\n=== FRECUENCIA DE DÍGITOS POR DNI ===\n")
     # Se llama a la función para analizar la frecuencia de los dígitos en los DNIs ingresados.
-    analizar_frecuencia_dnis(documentos, letras)
+    analizar_frecuencia_dnis(documentos, letras, estudiantes)
 
     print("\n=== FRECUENCIA DE LOS DÍGITOS EN LOS CONJUNTOS ===\n")
     # Se llama a la función para analizar la frecuencia de los dígitos en los conjuntos.
@@ -344,7 +323,7 @@ def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
         conjuntos (list): Lista de conjuntos a operar.
         letras (str): String de letras que identifican a cada conjunto.
         operador (str): Operador a utilizar ('U', '∩', 'Δ').
-        funcion_operacion: callable - Función que realiza la operación entre conjuntos.
+        funcion_operacion (callable): Función que realiza la operación entre conjuntos.
 
     Returns:
         out (None): Muestra el resultado de la operación en la consola.
@@ -367,7 +346,7 @@ def mostrar_operacion(conjuntos, letras, operador, funcion_operacion):
     print(f"{operacion_str} = {resultado_str}")
 
 
-def analizar_frecuencia_dnis(documentos, letras):
+def analizar_frecuencia_dnis(documentos, letras, estudiantes):
     """
     Función que analiza la frecuencia de los dígitos en los DNIs ingresados.
 
@@ -404,7 +383,7 @@ def analizar_frecuencia_dnis(documentos, letras):
         detalle = ", ".join([f"f({d})={c}" for d, c in digitos_ordenados])
 
         # Mostramos el resultado en la consola, incluyendo la letra del conjunto y el DNI.
-        print(f"{letras[i]}: [{dni}] -> {detalle}")
+        print(f"{letras[i]}: [{estudiantes[i]}] -> {detalle}")
 
 
 def analizar_frecuencia_conjuntos(conjuntos):
@@ -552,14 +531,6 @@ if __name__ == "__main__":
     opcion = input("\nSeleccione una opción (1 o 2) -> ")
 
     if opcion == "2":
-        dnis_predefinidos = [
-            "45413855",  # Ramallo Gerónimo
-            "44011335",  # Mubilla Yanela
-            "32084674",  # Lahoz Cristian
-            "35569473",  # Lagos Alejandro
-            "36184823",  # Maldonado Ariana
-        ]
-
-        analizar_grupo(documentos_predefinidos=dnis_predefinidos)
+        analizar_grupo(documentos_predefinidos=DNIS_PREDEFINIDOS)
     else:
         analizar_grupo()
