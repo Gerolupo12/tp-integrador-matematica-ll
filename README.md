@@ -50,7 +50,7 @@ El objetivo de este trabajo práctico integrador fue **profundizar la relación 
 
 Este script permite ingresar los DNIs de los integrantes (o usar un conjunto predefinido) y aplicar sobre ellos análisis matemático y lógico.
 
-### Funcionalidades:
+### Funcionalidades
 
 - Generación automática de conjuntos de dígitos únicos
 - Visualización de:
@@ -74,7 +74,7 @@ Este script permite ingresar los DNIs de los integrantes (o usar un conjunto pre
 
 Este script trabaja sobre la lista de años de nacimiento de los integrantes del equipo.
 
-### Funcionalidades:
+### Funcionalidades
 
 - Conteo de integrantes nacidos en años pares e impares
 - Verificación de condición "Grupo Z" (si todos nacieron después del 2000)
@@ -87,7 +87,7 @@ Este script trabaja sobre la lista de años de nacimiento de los integrantes del
 
 Duración estimada: entre 5 y 10 minutos.  
 Cada integrante explica en cámara la parte que realizó, el funcionamiento del programa y la integración entre matemática y programación.  
-📌 [Link al video (YouTube)](https://...)
+📌 [Link al video (YouTube)](https://youtu.be/Csyh2rpohq8)
 
 ---
 
